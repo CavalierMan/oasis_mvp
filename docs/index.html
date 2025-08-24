@@ -16,7 +16,7 @@
     <header class="oasis-hero">
         <div class="video-background">
             <video autoplay muted loop id="hero-video">
-                <source src="https://videos.pexels.com/video-files/3409892/3409892-hd_1920_1080_30fps.mp4" type="video/mp4">
+                <source src="https://videos.pexels.com/video-files/8962002/8962002-hd_1920_1080_25fps.mp4" type="video/mp4">
                 Seu navegador não suporta vídeos.
             </video>
         </div>
@@ -37,6 +37,14 @@
             <div class="container">
                 <h2>Sua energia parece dividida entre mil direções?</h2>
                 <p>Carreira, finanças, saúde, relacionamentos, propósito... Cuidar de tudo ao mesmo tempo parece uma corrida sem fim. Mas e se o segredo não for correr mais rápido, mas sim caminhar com mais clareza? E se, para avançar, o primeiro passo for uma pausa?</p>
+            </div>
+        </section>
+
+        <section class="oasis-wheel">
+            <div class="container">
+                <h2>Visualize seu Momento Atual</h2>
+                <p>A Roda da Vida é uma ferramenta poderosa de autoconhecimento que te dá clareza sobre as áreas que mais precisam de sua atenção e carinho.</p>
+                <img src="images/roda-da-vida.svg" alt="Gráfico da Roda da Vida com 12 pilares">
             </div>
         </section>
 
@@ -69,44 +77,48 @@
         </section>
     </main>
 
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Oasis. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
     <script>
-        // Função para lidar com o envio do formulário
+        // Função para lidar com o envio dos formulários da landing page
         const handleFormSubmit = (formId, inputId) => {
             const form = document.getElementById(formId);
             const emailInput = document.getElementById(inputId);
+            const serverUrl = 'https://roda-da-vida-backend.onrender.com/subscribe';
 
             form.addEventListener('submit', function (event) {
-                // Previne o comportamento padrão do formulário (que é recarregar a página)
                 event.preventDefault();
-
                 const email = emailInput.value;
-                const serverUrl = 'https://roda-da-vida-backend.onrender.com/subscribe';
 
-                // Usamos a API fetch para enviar os dados para o nosso backend
                 fetch(serverUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email }),
                 })
-                .then(response => response.json())
-                .then(data => {
-                    // Exibe a mensagem de resposta do servidor em um alerta
-                    alert(data.message);
-                    if (data.status === 'success') {
-                        // Limpa o campo de e-mail se o cadastro for bem-sucedido
-                        emailInput.value = '';
+                .then(response => {
+                    if (!response.ok) {
+                        // Se a resposta não for de sucesso, lemos o erro
+                        return response.json().then(err => { throw new Error(err.message) });
                     }
+                    return response.json();
+                })
+                .then(data => {
+                    // Se o e-mail foi cadastrado com sucesso, redireciona o usuário
+                    window.location.href = 'auth.html';
                 })
                 .catch((error) => {
                     console.error('Erro:', error);
-                    alert('Não foi possível se conectar ao servidor. Verifique se ele está rodando.');
+                    // Mostra a mensagem de erro que veio do nosso servidor
+                    alert(error.message);
                 });
             });
         };
 
-        // Aplica a função para os dois formulários da página, fazer isto rodar não está fácil
+        // Aplica a função para os dois formulários da página
         handleFormSubmit('subscribe-form', 'email-input');
         handleFormSubmit('subscribe-form-bottom', 'email-input-bottom');
     </script>
