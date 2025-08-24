@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis - Sua vida em equilíbrio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="oasis-hero">
+        <div class="video-background">
+            <video autoplay muted loop id="hero-video">
+                <source src="https://videos.pexels.com/video-files/3409892/3409892-hd_1920_1080_30fps.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos.
+            </video>
+        </div>
+
+        <div class="hero-content">
+            <div class="logo">Oasis</div>
+            <p class="tagline">Sua vida em equilíbrio.</p>
+            <h1 class="impact-phrase">Cansado de correr? É hora de caminhar com intenção.</h1>
+            <form class="cta-form" id="subscribe-form">
+                <input type="email" name="email" id="email-input" placeholder="Seu melhor e-mail" required>
+                <button type="submit">Desejo encontrar meu equilíbrio</button>
+            </form>
+        </div>
+    </header>
+
+    <main>
+        <section class="oasis-connection">
+            <div class="container">
+                <h2>Sua energia parece dividida entre mil direções?</h2>
+                <p>Carreira, finanças, saúde, relacionamentos, propósito... Cuidar de tudo ao mesmo tempo parece uma corrida sem fim. Mas e se o segredo não for correr mais rápido, mas sim caminhar com mais clareza? E se, para avançar, o primeiro passo for uma pausa?</p>
+            </div>
+        </section>
+
+        <section class="oasis-solution">
+            <div class="container">
+                <div class="solution-text">
+                    <h2>Oasis é o seu guia pessoal para uma vida intencional.</h2>
+                    <p>Unindo a sabedoria da Roda da Vida com a gentileza da inteligência artificial, nosso app te ajuda a entender o que realmente importa e a dar um passo de cada vez. Sem pressão, sem julgamento. Apenas clareza e apoio.</p>
+                    <ul>
+                        <li>Reflita com a sua Roda da Vida.</li>
+                        <li>Planeje com uma IA aliada.</li>
+                        <li>Cresça com uma comunidade que te apoia.</li>
+                    </ul>
+                </div>
+                <div class="solution-image">
+                    <img src="images/roda-da-vida.svg" alt="Um vislumbre da Roda da Vida no aplicativo Oasis">
+                </div>
+            </div>
+        </section>
+
+        <section class="oasis-final-cta">
+            <div class="container">
+                <h2>A jornada para o equilíbrio começa com o primeiro passo.</h2>
+                <p>Junte-se à comunidade de pioneiros. Deixe seu e-mail para ser um dos primeiros a receber o acesso e começar a sua jornada com mais serenidade e propósito.</p>
+                 <form class="cta-form" id="subscribe-form-bottom">
+                    <input type="email" name="email" id="email-input-bottom" placeholder="Seu melhor e-mail" required>
+                    <button type="submit">Desejo encontrar meu equilíbrio</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Função para lidar com o envio do formulário
+        const handleFormSubmit = (formId, inputId) => {
+            const form = document.getElementById(formId);
+            const emailInput = document.getElementById(inputId);
+
+            form.addEventListener('submit', function (event) {
+                // Previne o comportamento padrão do formulário (que é recarregar a página)
+                event.preventDefault();
+
+                const email = emailInput.value;
+                const serverUrl = 'https://roda-da-vida-backend.onrender.com/subscribe';
+
+                // Usamos a API fetch para enviar os dados para o nosso backend
+                fetch(serverUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Exibe a mensagem de resposta do servidor em um alerta
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        // Limpa o campo de e-mail se o cadastro for bem-sucedido
+                        emailInput.value = '';
+                    }
+                })
+                .catch((error) => {
+                    console.error('Erro:', error);
+                    alert('Não foi possível se conectar ao servidor. Verifique se ele está rodando.');
+                });
+            });
+        };
+
+        // Aplica a função para os dois formulários da página, fazer isto rodar não está fácil
+        handleFormSubmit('subscribe-form', 'email-input');
+        handleFormSubmit('subscribe-form-bottom', 'email-input-bottom');
+    </script>
+
+</body>
+</html>

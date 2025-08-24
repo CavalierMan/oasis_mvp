@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Oasis - Avaliação Guiada</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="auth-container">
+        <div class="auth-box" style="max-width: 600px;">
+            <h1 id="pillar-title">Iniciando sua Avaliação Guiada</h1>
+            <p id="pillar-summary">O assistente Oasis irá te guiar através dos 12 pilares da sua vida. Comece pelo primeiro.</p>
+            
+            <form id="assessment-form">
+                <div class="form-group">
+                    <label for="user-text" id="pillar-label">Como você se sente sobre este pilar?</label>
+                    <textarea id="user-text" rows="4" placeholder="Escreva livremente sobre sua satisfação, desafios e conquistas nesta área..."></textarea>
+                </div>
+                <button type="submit" class="cta-button" id="submit-pillar-button">Analisar e Próximo Pilar</button>
+            </form>
+
+            <div id="results-container" style="margin-top: 20px;">
+                </div>
+        </div>
+    </main>
+
+    <script>
+        const pillars = [
+            'Carreira', 'Finanças', 'Saúde', 'Família', 'Amor', 'Lazer',
+            'Espiritual', 'Amigos', 'Intelectual', 'Emocional', 'Profissional', 'Propósito'
+        ];
+        
+        let currentPillarIndex = 0;
+        const finalScores = {};
+
+        const pillarTitle = document.getElementById('pillar-title');
+        const pillarSummary = document.getElementById('pillar-summary');
+        const pillarLabel = document.getElementById('pillar-label');
+        const userTextInput = document.getElementById('user-text');
+        const form = document.getElementById('assessment-form');
+        const submitButton = document.getElementById('submit-pillar-button');
+        const resultsContainer = document.getElementById('results-container');
+
+        // Função para mostrar o pilar atual
+        function showCurrentPillar() {
+            if (currentPillarIndex < pillars.length) {
+                const currentPillar = pillars[currentPillarIndex];
+                pillarTitle.innerText = `Pilar ${currentPillarIndex + 1}/12: ${currentPillar}`;
+                pillarLabel.innerText = `Como você se sente sobre sua ${currentPillar.toLowerCase()} hoje?`;
+                userTextInput.value = '';
+                userTextInput.focus();
+            } else {
+                // Fim da avaliação
+                pillarTitle.innerText = 'Avaliação Concluída!';
+                pillarSummary.innerHTML = 'Parabéns por completar sua Roda da Vida. Este é o primeiro passo para uma vida com mais clareza e propósito.';
+                form.style.display = 'none'; // Esconde o formulário
+                // No futuro, aqui salvaremos a Roda da Vida completa e mostraremos o gráfico.
+            }
+        }
+
+        // Evento de envio do formulário
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const userText = userTextInput.value;
+            const currentPillar = pillars[currentPillarIndex];
+
+            if (!userText.trim()) {
+                alert('Por favor, escreva algo sobre como você se sente.');
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.innerText = 'Analisando...';
+
+            const serverUrl = 'https://roda-da-vida-backend.onrender.com/assistente-avaliacao';
+
+            try {
+                const response = await fetch(serverUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pillar_name: currentPillar, user_text: userText })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Guarda a nota e mostra o resumo
+                    finalScores[currentPillar.toLowerCase()] = data.nota_sugerida;
+                    pillarSummary.innerText = `Resumo da IA: "${data.resumo}" (Nota sugerida: ${data.nota_sugerida})`;
+                    
+                    // Vai para o próximo pilar
+                    currentPillarIndex++;
+                    showCurrentPillar();
+                } else {
+                    alert('Erro: ' + data.message);
+                }
+
+            } catch (error) {
+                console.error('Erro na comunicação:', error);
+                alert('Não foi possível se conectar ao assistente. Tente novamente.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerText = 'Analisar e Próximo Pilar';
+            }
+        });
+        
+        // Inicia a primeira pergunta
+        showCurrentPillar();
+    </script>
+</body>
+</html>

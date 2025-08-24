@@ -1,0 +1,284 @@
+/* Configurações Globais */
+body {
+    font-family: 'Lato', sans-serif; /* Usando a fonte importada */
+    margin: 0;
+    background-color: #fdfdfd;
+    color: #4a4a4a;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Seção 1: A Primeira Impressão */
+.oasis-hero {
+    position: relative;
+    height: 100vh; /* Ocupa 100% da altura da tela */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2;
+}
+
+#hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz o vídeo cobrir toda a área sem distorcer */
+}
+
+/* Camada escura sobre o vídeo para legibilidade do texto */
+.oasis-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.hero-content {
+    z-index: 1;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.tagline {
+    font-size: 1.2em;
+    font-weight: 300;
+}
+
+.impact-phrase {
+    font-size: 2.5em;
+    margin: 20px 0;
+    font-weight: 400;
+}
+
+.cta-form {
+    margin-top: 30px;
+}
+
+.cta-form input {
+    padding: 15px;
+    width: 280px;
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cta-form input::placeholder {
+    color: #ddd;
+}
+
+.cta-form button {
+    padding: 15px 30px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-form button:hover {
+    background-color: white;
+}
+
+/* Seção 2: A Conexão */
+.oasis-connection {
+    padding: 80px 20px;
+    background-color: #f7f7f7;
+}
+
+.oasis-connection h2 {
+    font-size: 2em;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.oasis-connection p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    max-width: 650px;
+    margin: auto;
+}
+
+/* Seção 3: A Solução */
+.oasis-solution {
+    padding: 80px 20px;
+    background-color: #fff;
+}
+.oasis-solution .container{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    text-align: left;
+}
+.solution-text{
+    flex: 2;
+}
+.solution-image{
+    flex: 1;
+}
+
+.oasis-solution h2 {
+    font-size: 2em;
+    font-weight: 400;
+}
+
+.oasis-solution ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+.oasis-solution ul li {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+/* Seção 4: O Convite Final */
+.oasis-final-cta {
+    padding: 80px 20px;
+    background-color: #f7f7f7;
+}
+.oasis-final-cta h2{
+    font-size: 2em;
+}
+/* Estilo para a imagem de vislumbre do app na seção de solução */
+.solution-image img {
+  width: 100%;
+  max-width: 350px; /* Define um tamanho máximo */
+  border-radius: 25px; /* Deixa as bordas arredondadas, como uma tela */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave */
+  animation: none; /* Remove a animação de rotação APENAS para esta imagem */
+}
+/* ============================================= */
+/* === ESTILOS PARA PÁGINA DE AUTENTICAÇÃO === */
+/* ============================================= */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7f7f7; /* Um fundo suave e neutro */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-box {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-box h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: 400;
+  font-size: 2em;
+}
+
+.auth-box p {
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #444;
+  font-size: 0.9em;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+/* Reutiliza e ajusta o estilo do botão principal */
+.auth-box .cta-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 1em;
+}
+
+.auth-switch {
+  margin-top: 25px;
+}
+
+.auth-switch a {
+  color: #4a90e2; /* O mesmo azul da landing page */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+/* === ESTILOS PARA O DASHBOARD / RODA DA VIDA === */
+.wheel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 20px 30px; /* Espaçamento vertical e horizontal */
+    margin-bottom: 30px;
+}
+
+.pillar-item {
+    text-align: left;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.slider {
+    flex-grow: 1; /* Faz o slider ocupar o espaço disponível */
+}
+
+.slider-value {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #4a90e2;
+    min-width: 20px; /* Garante alinhamento */
+    text-align: center;
+}

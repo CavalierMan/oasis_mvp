@@ -1,0 +1,60 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+  <defs>
+    <path id="sectorPath" d="M250,250 L250,50 A200,200 0 0,1 336.6,84.5 Z"/>
+    <path id="textPath" d="M260,150 A100,100 0 0,1 450,250"/>
+  </defs>
+  <g transform="translate(0,0)">
+    <g fill-opacity="0.8">
+      <use href="#sectorPath" fill="#FF6B6B"/>
+      <use href="#sectorPath" fill="#FFD166" transform="rotate(30, 250, 250)"/>
+      <use href="#sectorPath" fill="#06D6A0" transform="rotate(60, 250, 250)"/>
+      <use href="#sectorPath" fill="#118AB2" transform="rotate(90, 250, 250)"/>
+      <use href="#sectorPath" fill="#073B4C" transform="rotate(120, 250, 250)"/>
+      <use href="#sectorPath" fill="#F78C6B" transform="rotate(150, 250, 250)"/>
+      <use href="#sectorPath" fill="#6A4C93" transform="rotate(180, 250, 250)"/>
+      <use href="#sectorPath" fill="#1982C4" transform="rotate(210, 250, 250)"/>
+      <use href="#sectorPath" fill="#8AC926" transform="rotate(240, 250, 250)"/>
+      <use href="#sectorPath" fill="#FFCA3A" transform="rotate(270, 250, 250)"/>
+      <use href="#sectorPath" fill="#FF595E" transform="rotate(300, 250, 250)"/>
+      <use href="#sectorPath" fill="#9A6D38" transform="rotate(330, 250, 250)"/>
+    </g>
+    <g font-size="11" fill="white" font-weight="bold" text-anchor="middle">
+      <text transform="rotate(15, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">CARREIRA</textPath>
+      </text>
+      <text transform="rotate(45, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">FINANÇAS</textPath>
+      </text>
+      <text transform="rotate(75, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">SAÚDE</textPath>
+      </text>
+      <text transform="rotate(105, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">FAMÍLIA</textPath>
+      </text>
+      <text transform="rotate(135, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">AMOR</textPath>
+      </text>
+      <text transform="rotate(165, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">LAZER</textPath>
+      </text>
+      <text transform="rotate(195, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">ESPIRITUAL</textPath>
+      </text>
+      <text transform="rotate(225, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">AMIGOS</textPath>
+      </text>
+      <text transform="rotate(255, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">INTELECTUAL</textPath>
+      </text>
+      <text transform="rotate(285, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">EMOCIONAL</textPath>
+      </text>
+      <text transform="rotate(315, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">PROFISSIONAL</textPath>
+      </text>
+      <text transform="rotate(345, 250, 250)">
+        <textPath href="#textPath" startOffset="20%">PROPÓSITO</textPath>
+      </text>
+    </g>
+  </g>
+</svg>

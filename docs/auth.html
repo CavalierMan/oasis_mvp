@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesse seu Oasis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="auth-container">
+        <div class="auth-box">
+            <h1 id="auth-title">Login</h1>
+            <p id="auth-subtitle">Acesse seu painel para continuar sua jornada.</p>
+            <form id="auth-form">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="cta-button" id="submit-button">Entrar</button>
+            </form>
+            <p class="auth-switch">
+                <a href="#" id="switch-link">Ainda não tem uma conta? Cadastre-se</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // --- VARIÁVEIS DE CONTROLE ---
+        const title = document.getElementById('auth-title');
+        const subtitle = document.getElementById('auth-subtitle');
+        const form = document.getElementById('auth-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const submitButton = document.getElementById('submit-button');
+        const switchLink = document.getElementById('switch-link');
+        
+        let isLoginMode = true;
+        const serverUrl = 'https://roda-da-vida-backend.onrender.com'; // Nosso backend NO AR!
+
+        // --- FUNÇÃO PARA TROCAR ENTRE LOGIN E CADASTRO ---
+        function toggleMode() {
+            isLoginMode = !isLoginMode;
+            if (isLoginMode) {
+                title.innerText = 'Login';
+                subtitle.innerText = 'Acesse seu painel para continuar sua jornada.';
+                submitButton.innerText = 'Entrar';
+                switchLink.innerHTML = 'Ainda não tem uma conta? <strong>Cadastre-se</strong>';
+            } else {
+                title.innerText = 'Cadastro';
+                subtitle.innerText = 'Crie sua conta para iniciar sua jornada no Oasis.';
+                submitButton.innerText = 'Cadastrar';
+                switchLink.innerHTML = 'Já tem uma conta? <strong>Faça Login</strong>';
+            }
+        }
+
+        switchLink.addEventListener('click', toggleMode);
+
+        // --- FUNÇÃO PARA ENVIAR OS DADOS AO BACKEND ---
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Previne o recarregamento da página
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const endpoint = isLoginMode ? '/login' : '/register';
+            
+            try {
+                const response = await fetch(serverUrl + endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    if (isLoginMode) {
+                        // Se o login for bem-sucedido, redireciona para o dashboard
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        // Se o cadastro for bem-sucedido, muda para o modo de login
+                        toggleMode();
+                    }
+                } else {
+                    // Mostra a mensagem de erro que veio do nosso servidor
+                    alert('Erro: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Falha na comunicação com o servidor:', error);
+                alert('Não foi possível se conectar ao servidor. Tente novamente mais tarde.');
+            }
+        });
+    </script>
+</body>
+</html>
