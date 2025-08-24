@@ -6,6 +6,62 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import google.generativeai as genai
 import json
+
+# =================================================================
+# FUNÇÃO PARA INICIALIZAR O BANCO DE DADOS E CRIAR AS TABELAS
+# =================================================================
+def init_db():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    
+    # Tabela de E-mails (da Landing Page)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS emails (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email_address TEXT NOT NULL UNIQUE,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Tabela de Usuários do App
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Tabela de Pontuações da Roda da Vida
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS wheel_scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            carreira INTEGER DEFAULT 0,
+            financas INTEGER DEFAULT 0,
+            saude INTEGER DEFAULT 0,
+            familia INTEGER DEFAULT 0,
+            amor INTEGER DEFAULT 0,
+            lazer INTEGER DEFAULT 0,
+            espiritual INTEGER DEFAULT 0,
+            amigos INTEGER DEFAULT 0,
+            intelectual INTEGER DEFAULT 0,
+            emocional INTEGER DEFAULT 0,
+            profissional INTEGER DEFAULT 0,
+            proposito INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    ''')
+    
+    conn.commit()
+    conn.close()
+    print("Banco de dados inicializado e verificado com sucesso.")
+
+# Executa a função de inicialização quando o aplicativo começa
+init_db()
+# =================================================================
 # Configura a API do Google Gemini com a chave do ambiente
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
